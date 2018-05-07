@@ -1,7 +1,11 @@
 #!/bin/bash
 
 echo 1. Building our run environment:
-/usr/local/bin/docker build run -f run/Dockerfile -t hello-world:1.0
+/usr/local/bin/docker build run -f run/Dockerfile -t mindstreamorg/hello-world:1.0
+echo -e "\n"
+
+echo 2. Pushing the docker image to Dockerhub:
+/usr/local/bin/docker push mindstreamorg/hello-world:1.0
 echo -e "\n"
 
 echo 2. Running our runtime environment:
