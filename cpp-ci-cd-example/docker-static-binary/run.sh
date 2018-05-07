@@ -5,7 +5,7 @@ echo 1. Building our run environment:
 echo -e "\n"
 
 echo 2. Running our runtime environment:
-/usr/local/bin/docker run --rm hello-world:1.0 sh -c "echo hello-world"
+/usr/local/bin/docker run --rm hello-world:1.0 sh -c "echo Hello World"
 echo -e "\n"
 
 echo 3. Binary size:
