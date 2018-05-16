@@ -9,7 +9,7 @@ echo 2. Pushing the docker image to Dockerhub:
 echo -e "\n"
 
 echo 2. Running our runtime environment:
-/usr/local/bin/docker run --rm hello-world:1.0 sh -c "echo Hello World"
+/usr/local/bin/docker run --rm mindstreamorg/hello-world:1.0 sh -c "echo Hello World"
 echo -e "\n"
 
 echo 3. Binary size:
