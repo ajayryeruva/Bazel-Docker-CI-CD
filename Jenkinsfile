@@ -10,7 +10,7 @@ node('master')  {
                  sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
           }
 					stage('SonarQube analysis') {
-    						ws('./') {
+    						// ws('./') {
     				 		// requires SonarQube Scanner 2.8+
     						def RunnerHome = tool 'SonarRunner';
     								withSonarQubeEnv('SonarQube 7.1') {
