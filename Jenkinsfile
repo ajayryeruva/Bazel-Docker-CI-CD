@@ -3,7 +3,7 @@ def err = null
 try {
 
 node('master')  {
-	  stage('checkout') {
+	  stage('git-repo-checkout') {
                  checkout scm
           }
           stage('generate-cppcheck-statis-analysis-report-file'){
@@ -13,7 +13,7 @@ node('master')  {
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
            }
           stage('bazel-test'){
-                 sh 'sudo bazel-bin/main/hello-world; sudo cp cpp-ci-cd-example/bazel-bin/main/hello-world cpp-ci-cd-example/docker-static-binary/run/'
+                 sh 'cd cpp-ci-cd-example/; sudo bazel-bin/main/hello-world; sudo cp cpp-ci-cd-example/bazel-bin/main/hello-world cpp-ci-cd-example/docker-static-binary/run/'
           }
           stage('docker-build-publish-run'){
                  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
