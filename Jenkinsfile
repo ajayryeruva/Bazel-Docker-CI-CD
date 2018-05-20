@@ -9,9 +9,18 @@ node('master')  {
           stage('generate-cppcheck-sar-file'){
                  sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
           }
+					stage('SonarQube analysis') {
+    						ws('./') {
+    				 		// requires SonarQube Scanner 2.8+
+    						def RunnerHome = tool 'SonarRunner';
+    								withSonarQubeEnv('SonarQube 7.1') {
+           							 bat "${scannerHome}/bin/sonar-runner.bat"
+    								}
+  							}
+					}
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
-           }
+          }
           stage('bazel-test'){
                  sh 'cd cpp-ci-cd-example/; sudo bazel-bin/main/hello-world; sudo cp bazel-bin/main/hello-world docker-static-binary/run/'
           }
@@ -19,7 +28,6 @@ node('master')  {
                  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
           }
 }
-
 }
 
 catch (caughtError) {
