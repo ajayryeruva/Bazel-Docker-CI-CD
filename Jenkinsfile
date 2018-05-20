@@ -14,7 +14,8 @@ node('master')  {
     				 		// requires SonarQube Scanner 2.8+
     						def RunnerHome = tool 'SonarRunner';
     								withSonarQubeEnv('SonarQube 7.1') {
-           							 bat "${scannerHome}/bin/sonar-runner.bat"
+           							 // bat "${RunnerHome}/bin/sonar-runner.bat"
+												 sh "${RunnerHome}/bin/sonar-runner"
     								}
   							}
 					}
