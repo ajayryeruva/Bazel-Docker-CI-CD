@@ -1,7 +1,8 @@
-FROM alpine
+#FROM alpine
+FROM centos:7
 MAINTAINER Ajay R
 
-RUN apk add --update alpine-sdk
+#RUN apk add --update alpine-sdk
 
 COPY ./hello-world /
 
