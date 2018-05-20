@@ -1,7 +1,4 @@
-#include <stdio.h>
-
-int main()
-{
-  printf("Hello World!");
-  return 0;
-}
+cc_binary(
+    name = "hello-world",
+    srcs = ["hello-world.cc"]
+)
