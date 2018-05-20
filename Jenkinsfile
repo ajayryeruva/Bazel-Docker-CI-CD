@@ -15,7 +15,7 @@ node('master')  {
     						def ScannerHome = tool 'SonarScanner';
     						withSonarQubeEnv('SonarQube 7.1') {
            							 // bat "${ScannerHome}/bin/sonar-scanner.bat"
-												 sh "${ScannerHome}/bin/sonar-scanner"
+												 sh "${ScannerHome}/bin/sonar-scanner -X"
     						}
   							//}
 					}
