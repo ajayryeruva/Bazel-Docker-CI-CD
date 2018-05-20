@@ -3,7 +3,7 @@ def err = null
 try {
 
 node('master')  {
-	  stage('git-code-checkout') {
+	  stage('git-repo-checkout') {
                  checkout scm
           }
           stage('generate-cppcheck-sar-file'){
