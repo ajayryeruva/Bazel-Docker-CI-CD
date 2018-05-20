@@ -9,7 +9,7 @@ sudo /usr/bin/docker push mindstreamorg/hello-world:1.0
 echo -e "\n"
 
 echo 3. Running our runtime environment:
-/usr/bin/docker run --rm mindstreamorg/hello-world:1.0 sh -c "/hello-world"
+sudo docker run --rm -it ed446934d629 /bin/sh -c "./hello-world"
 echo -e "\n"
 
 echo 4. Binary size:
