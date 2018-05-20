@@ -8,5 +8,8 @@ echo 2. Pushing the docker image to Dockerhub:
 sudo /usr/bin/docker push mindstreamorg/hello-world:1.0
 echo -e "\n"
 
-echo 3. Binary size:
+echo 3. Running our runtime environment:
+/usr/bin/docker run --rm mindstreamorg/hello-world:1.0 sh -c "/hello-world"
+
+echo 4. Binary size:
 sudo ls -lrth ${WORKSPACE}/cpp-ci-cd-example/bazel-bin/main/hello-world
