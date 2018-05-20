@@ -6,7 +6,7 @@ node('master')  {
 	  stage('git-repo-checkout') {
                  checkout scm
           }
-          stage('generate-cppcheck-statis-analysis-report-file'){
+          stage('generate-cppcheck-static-analysis-report-file'){
                  sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
           }
           stage('bazel-build'){
