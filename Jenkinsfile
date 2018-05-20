@@ -10,14 +10,14 @@ node('master')  {
                  sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
           }
 					stage('SonarQube analysis') {
-    						// ws('./') {
+    						ws('.') {
     				 		// requires SonarQube Scanner 2.8+
-    						def ScannerHome = tool 'SonarScanner';
-    						withSonarQubeEnv('SonarQube 7.1') {
-           							 // bat "${ScannerHome}/bin/sonar-scanner.bat"
-												 sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -X"
-    						}
-  							//}
+    									def ScannerHome = tool 'SonarScanner';
+    									withSonarQubeEnv('SonarQube 7.1') {
+           							 		// bat "${ScannerHome}/bin/sonar-scanner.bat"
+												 		sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -X"
+    									}
+  							}
 					}
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
