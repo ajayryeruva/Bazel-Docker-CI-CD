@@ -13,11 +13,11 @@ node('master')  {
     						// ws('./') {
     				 		// requires SonarQube Scanner 2.8+
     						def RunnerHome = tool 'SonarRunner';
-    								withSonarQubeEnv('SonarQube 7.1') {
+    						withSonarQubeEnv('SonarQube 7.1') {
            							 // bat "${RunnerHome}/bin/sonar-runner.bat"
 												 sh "${RunnerHome}/bin/sonar-runner"
-    								}
-  							}
+    						}
+  							//}
 					}
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
