@@ -12,10 +12,10 @@ node('master')  {
 					stage('SonarQube analysis') {
     						// ws('./') {
     				 		// requires SonarQube Scanner 2.8+
-    						def RunnerHome = tool 'SonarRunner';
+    						def ScannerHome = tool 'SonarScanner';
     						withSonarQubeEnv('SonarQube 7.1') {
-           							 // bat "${RunnerHome}/bin/sonar-runner.bat"
-												 sh "${RunnerHome}/bin/sonar-runner"
+           							 // bat "${ScannerHome}/bin/sonar-scanner.bat"
+												 sh "${ScannerHome}/bin/sonar-scanner"
     						}
   							//}
 					}
