@@ -29,9 +29,7 @@ node('master')  {
                  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
           }
 					stage ('bench'){
-            steps {
-                build job: 'etl - benchmark', wait: false
-            }
+                 build job: 'etl - benchmark', wait: false
         }
 }
 }
