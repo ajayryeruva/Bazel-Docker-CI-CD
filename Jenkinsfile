@@ -7,7 +7,7 @@ node('master')  {
                  checkout scm
           }
           stage('pre-analysis'){
-                 sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
+                 sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> /tmp/cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> /tmp/cppcheck.xml'
           }
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
