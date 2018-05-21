@@ -5,7 +5,7 @@ try {
 node('master')  {
 	  stage('git-repo-checkout') {
                  checkout scm
-								 //sh 'git pull -f origin dev'
+		 //sh 'git pull -f origin dev'
                  //sh 'git push -f origin master'
                  //sh "git tag bazel-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
                  //sh "git push -f origin bazel-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
@@ -19,19 +19,19 @@ node('master')  {
           stage('bazel-test'){
                  sh 'cd cpp-ci-cd-example/; sudo bazel-bin/main/hello-world; sudo cp bazel-bin/main/hello-world docker-static-binary/run/'
           }
-					stage ('cppcheck'){
-								 build job: 'cppcheck-report', wait: false
-					}
-					stage('sonarscan') {
-								// ws('.') {
-								// requires SonarQube Scanner 2.8+
-								def ScannerHome = tool 'SonarScanner';
-								withSonarQubeEnv('SonarQube 7.1') {
-										// bat "${ScannerHome}/bin/sonar-scanner.bat"
-										sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.cppcheck.reportPath=cppcheck.xml -Dsonar.analysis.mode= -X"
-								}
-								//}
-					}
+          stage ('cppcheck'){
+		 build job: 'cppcheck-report', wait: false
+          }
+          stage('sonarscan') {
+		 // ws('.') {
+		 // requires SonarQube Scanner 2.8+
+		 def ScannerHome = tool 'SonarScanner';
+		 withSonarQubeEnv('SonarQube 7.1') {
+		 // bat "${ScannerHome}/bin/sonar-scanner.bat"
+		 sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.cppcheck.reportPath=cppcheck.xml -Dsonar.analysis.mode= -X"
+		  }
+		//}
+	  }
           stage('docker-cycle'){
                  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
           }
@@ -48,13 +48,13 @@ finally {
         // Send e-mail notifications for failed or unstable builds.
         // currentBuild.result must be non-null for this step to work.
         step([$class: 'Mailer',
-           notifyEveryUnstableBuild: true,
-           recipients: "ajay.yeruva@mindstream.org",
-           sendToIndividuals: true])
+        notifyEveryUnstableBuild: true,
+        recipients: "ajay.yeruva@mindstream.org",
+        sendToIndividuals: true])
     }
     /* Must re-throw exception to propagate error */
     if (err) {
         throw err
-	}
+    }
 
 }
