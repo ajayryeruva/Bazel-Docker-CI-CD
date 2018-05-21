@@ -7,7 +7,7 @@ node('master')  {
                  checkout scm
           }
           stage('pre-analysis'){
-                 sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> /tmp/cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> /tmp/cppcheck.xml'
+                 sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
           }
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; sudo /usr/bin/bazel build //main:hello-world'
@@ -21,7 +21,7 @@ node('master')  {
 								def ScannerHome = tool 'SonarScanner';
 								withSonarQubeEnv('SonarQube 7.1') {
 										// bat "${ScannerHome}/bin/sonar-scanner.bat"
-										sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.analysis.mode= -X"
+										sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.cppcheck.reportPath=cppcheck.xml -Dsonar.analysis.mode= -X"
 								}
 								//}
 					}
