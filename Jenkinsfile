@@ -5,6 +5,10 @@ try {
 node('master')  {
 	  stage('git-repo-checkout') {
                  checkout scm
+								 //sh 'git pull -f origin dev'
+                 //sh 'git push -f origin master'
+                 //sh "git tag bazel-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                 //sh "git push -f origin bazel-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
           }
           //stage('pre-analysis'){
           //       sh '/usr/bin/cppcheck --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml; /usr/bin/cppcheck --enable=all --inconclusive --xml --xml-version=2 cpp-ci-cd-example 2> cppcheck.xml'
