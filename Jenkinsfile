@@ -15,7 +15,7 @@ node('master')  {
     						def ScannerHome = tool 'SonarScanner';
     						withSonarQubeEnv('SonarQube 7.1') {
            					// bat "${ScannerHome}/bin/sonar-scanner.bat"
-										sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081  -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.analysis.mode= -X"
+										sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.analysis.mode= -X"
     						}
   							//}
 					}
