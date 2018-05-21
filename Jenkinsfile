@@ -22,7 +22,7 @@ node('master')  {
 					stage ('cppcheck'){
 								 build job: 'cppcheck-report', wait: false
 					}
-					stage('SonarScanner') {
+					stage('sonarscan') {
 								// ws('.') {
 								// requires SonarQube Scanner 2.8+
 								def ScannerHome = tool 'SonarScanner';
