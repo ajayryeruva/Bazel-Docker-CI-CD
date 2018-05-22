@@ -38,39 +38,39 @@ node('master')  {
 		Deploying image...OK
 		Executing QA tests...OK
 		// sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-				 """
-   	userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
+	        """
+   	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
 				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
 				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'performance']
 		])
 	  }
 
-   if(userInput['QA']){
-        stage('QA stage') {
-         echo """
-             Getting image from Docker Registry...OK
-             Deploying image...OK
-             Executing QA tests...OK
-						 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-             """
-        }
-    }
+  	 if(userInput['QA']){
+      		  stage('QA stage') {
+       		     echo """
+        	     Getting image from Docker Registry...OK
+           	     Deploying image in QA env...OK
+              	     Executing QA tests...OK
+		     // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+                     """
+       		  }
+   	 }
 
-    if(userInput['performance']){
-        stage('Performance stage') {
-         echo """
-				 Getting image from Docker Registry...OK
-				 Deploying image...OK
-				 Executing QA tests...OK
-				 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-             """
-        }
-    }
+    	 if(userInput['performance']){
+      		  stage('Performance stage') {
+        	    echo """
+		    Getting image from Docker Registry...OK
+		    Deploying image in performance env...OK
+		    Executing performance tests...OK
+		    // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+                    """
+        	  }
+    	 }
 
-    stage('Production env') {
-        input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
-        echo 'Deploying to Production...OK'
-    }
+         stage('Production env') {
+      		  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
+      		  echo 'Deploying to Production...OK'
+    	}
 }
 }
 
