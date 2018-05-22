@@ -57,7 +57,7 @@ node('master')  {
    	 }
 
     	 if(userInput['Stage']){
-      		  stage('stage env) {
+      		  stage('stage env') {
         	    echo """
 		    Getting image from Docker Registry...OK
 		    Deploying image in Stage env...OK
