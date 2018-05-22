@@ -35,6 +35,9 @@ node('master')  {
           stage('docker-cycle'){
                  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
           }
+					stage('Deploy approval'){
+      					 input "Deploy to prod?"
+					}
 }
 }
 
