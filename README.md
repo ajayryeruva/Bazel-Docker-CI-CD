@@ -5,9 +5,9 @@
 
 ### Bazel
 
-- Version - 0.13.0
+- Build label - 0.13.0
 
 ### Docker
 
 - API version -	1.35
-  Version -	17.12.1-ce
+- Version -	17.12.1-ce
