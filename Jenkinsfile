@@ -41,7 +41,7 @@ node('master')  {
 	        """
    	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
 				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'Stage']
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run stage tests', name: 'Stage']
 		])
 	  }
 
