@@ -35,7 +35,7 @@ node('master')  {
 	  stage('Deployment approval'){
    	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
 				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy to QA and Run QA tests', name: 'QA'],
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy to production', name: 'production']
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy to production', name: 'Stage']
 		])
 	  }
 
@@ -51,19 +51,19 @@ node('master')  {
          	 }
          }
 
-         if(userInput['production']){
-        	 stage('production deployment') {
+         if(userInput['Stage']){
+        	 stage('stage deployment') {
         		 echo """
-	   	         echo 'Deploying to Production...OK'
+	   	         echo 'Deploying to stage...OK'
 	                 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
                          """
                  }
          }
 
-         //stage('Production Stage') {
-        	  //input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
-        	  //echo 'Deploying to Production...OK'
-   	 //}
+         stage('production deployment') {
+        	  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
+        	  echo 'Deploying to Production...OK'
+   	 }
 }
 }
 
