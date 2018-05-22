@@ -32,12 +32,45 @@ node('master')  {
 		  }
 		//}
 	  }
-          stage('docker-cycle'){
-                 sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-          }
 	  stage('Deployment approval'){
-      		 input "Deploy to prod?"
+		echo """
+		Getting image from Docker Registry...OK
+		Deploying image...OK
+		Executing QA tests...OK
+		// sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+				 """
+   	userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'performance']
+		])
 	  }
+
+   if(userInput['QA']){
+        stage('QA Stage') {
+         echo """
+             Getting image from Docker Registry...OK
+             Deploying image...OK
+             Executing QA tests...OK
+						 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+             """
+        }
+    }
+
+    if(userInput['performance']){
+        stage('Performance Stage') {
+         echo """
+				 Getting image from Docker Registry...OK
+				 Deploying image...OK
+				 Executing QA tests...OK
+				 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+             """
+        }
+    }
+
+    stage('Production Stage') {
+        input message: 'Are you sure you want to deploy to Production?', submitter: 'codependent'
+        echo 'Deploying to Production...OK'
+    }
 }
 }
 
