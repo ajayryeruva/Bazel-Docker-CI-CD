@@ -41,12 +41,12 @@ node('master')  {
 	        """
    	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
 				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'performance']
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'Stage']
 		])
 	  }
 
   	 if(userInput['QA']){
-      		  stage('QA stage') {
+      		  stage('QA env') {
        		     echo """
         	     Getting image from Docker Registry...OK
            	     Deploying image in QA env...OK
@@ -56,18 +56,18 @@ node('master')  {
        		  }
    	 }
 
-    	 if(userInput['performance']){
-      		  stage('Performance stage') {
+    	 if(userInput['Stage']){
+      		  stage('stage env) {
         	    echo """
 		    Getting image from Docker Registry...OK
-		    Deploying image in performance env...OK
-		    Executing performance tests...OK
+		    Deploying image in Stage env...OK
+		    Executing tests...OK
 		    // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
                     """
         	  }
     	 }
 
-         stage('Production env') {
+         stage('production env') {
       		  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
       		  echo 'Deploying to Production...OK'
     	}
