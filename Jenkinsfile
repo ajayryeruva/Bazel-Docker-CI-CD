@@ -3,7 +3,7 @@ def err = null
 try {
 
 node('master')  {
-	  stage('git-repo-checkout') {
+	  stage('git-checkout') {
                  checkout scm
 		 //sh 'git pull -f origin dev'
                  //sh 'git push -f origin master'
@@ -33,37 +33,44 @@ node('master')  {
 		//}
 	  }
 	  stage('Deployment approval'){
-   	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy to QA and Run QA tests', name: 'QA'],
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy to production', name: 'Stage']
+		echo """
+		Getting image from Docker Registry...OK
+		Deploying image...OK
+		Executing QA tests...OK
+		// sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+				 """
+   	userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
+				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run performance tests', name: 'performance']
 		])
 	  }
 
-   	 if(userInput['QA']){
-        	 stage('QA deployment') {
-         		echo """
-			echo 'Deploying to QA...OK'
-              	        Getting image from Docker Registry...OK
-                        Deploying image...OK
-                        Executing QA tests...OK
-                        // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-                        """
-         	 }
-         }
+   if(userInput['QA']){
+        stage('QA stage') {
+         echo """
+             Getting image from Docker Registry...OK
+             Deploying image...OK
+             Executing QA tests...OK
+						 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+             """
+        }
+    }
 
-         if(userInput['Stage']){
-        	 stage('stage deployment') {
-        		 echo """
-	   	         echo 'Deploying to stage...OK'
-	                 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-                         """
-                 }
-         }
+    if(userInput['performance']){
+        stage('Performance stage') {
+         echo """
+				 Getting image from Docker Registry...OK
+				 Deploying image...OK
+				 Executing QA tests...OK
+				 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+             """
+        }
+    }
 
-         stage('production deployment') {
-        	  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
-        	  echo 'Deploying to Production...OK'
-   	 }
+    stage('Production env') {
+        input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
+        echo 'Deploying to Production...OK'
+    }
 }
 }
 
@@ -85,4 +92,5 @@ finally {
     if (err) {
         throw err
     }
+
 }
