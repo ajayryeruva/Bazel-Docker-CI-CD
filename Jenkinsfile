@@ -2,7 +2,7 @@ def err = null
 
 try {
 
-node('slave-bazel')  {
+node('master')  {
 	  stage('git-checkout') {
                  checkout scm
 		 //sh 'git pull -f origin dev'
@@ -15,9 +15,15 @@ node('slave-bazel')  {
           //}
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; /usr/bin/bazel build //main:hello-world'
+		 #sh 'cp bazel-bin/main/hello-world docker-static-binary/run/;
+		 #sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh;
           }
+}
+}
+try {
+node('slave-bazel')  {
           stage('bazel-test'){
-                 sh 'cd cpp-ci-cd-example/; bazel-bin/main/hello-world; cp bazel-bin/main/hello-world docker-static-binary/run/'
+                 sh 'cd cpp-ci-cd-example/; bazel-bin/main/hello-world; 	 
           }
           stage ('cppcheck'){
 	  	 build job: 'cppcheck-report', wait: false
