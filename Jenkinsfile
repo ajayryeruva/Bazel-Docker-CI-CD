@@ -84,6 +84,7 @@ node('slave-bazel')  {
 		 		 //sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
     		         }
 		 }
+	 }
 }
 }
 
