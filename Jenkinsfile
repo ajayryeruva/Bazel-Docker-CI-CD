@@ -63,7 +63,7 @@ node('slave-bazel')  {
 	  //}
 	  stage('Deployment approval'){
 		script {
-                         if (env.BRANCH_NAME == "master") {
+                         //if (env.BRANCH_NAME == "master") {
                             echo """
 			    Getting image from Docker Registry...OK
 			    Deploying image...OK
@@ -74,21 +74,21 @@ node('slave-bazel')  {
 			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
 			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run stage tests', name: 'Stage']
 			    ])
-                         }
+                         //}
                   }
 	  }
 
   	 if(userInput['QA']){
       		  stage('QA env') {
 		     script {
-                         if (env.BRANCH_NAME == "master") {
+                         //if (env.BRANCH_NAME == "master") {
        		    		 echo """
         	    		 Getting image from Docker Registry...OK
            	    		 Deploying image in QA env...OK
               	    		 Executing QA tests...OK
 		    		 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
                     		 """
-       		 	 }
+       		 	 //}
 		     }
    	          }
 	 }
@@ -96,14 +96,14 @@ node('slave-bazel')  {
     	 if(userInput['Stage']){
       		  stage('stage env') {
 	             script {
-                         if (env.BRANCH_NAME == "master") {
+                         //if (env.BRANCH_NAME == "master") {
         	   		 echo """
 		  	         Getting image from Docker Registry...OK
 		    		 Deploying image in Stage env...OK
 		   		 Executing tests...OK
 		  		  // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
                     		 """
-        	    	 }
+        	    	 //}
 		     }
 		  }
     	 }
