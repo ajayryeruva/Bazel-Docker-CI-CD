@@ -2,7 +2,7 @@ def err = null
 
 try {
 
-node('master')  {
+node('slave-bazel')  {
 	  stage('git-checkout') {
                  checkout scm
 		 //sh 'git pull -f origin dev'
