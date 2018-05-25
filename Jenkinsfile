@@ -33,45 +33,57 @@ node('slave-bazel')  {
 		//}
 	  //}
 	  stage('Deployment approval'){
-		echo """
-		Getting image from Docker Registry...OK
-		Deploying image...OK
-		Executing QA tests...OK
-		// sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-	        """
-   	        userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
-				[$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run stage tests', name: 'Stage']
-		])
+		script {
+                         if (env.BRANCH_NAME == "master") {
+                            echo """
+			    Getting image from Docker Registry...OK
+			    Deploying image...OK
+			    Executing QA tests...OK
+			    // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+	       		    """
+   	        	    userInput = input(id: 'userInput', message: 'Select the next stage:', parameters: [
+			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
+			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run stage tests', name: 'Stage']
+			    ])
+                         }
+                  }
 	  }
 
   	 if(userInput['QA']){
       		  stage('QA env') {
-       		     echo """
-        	     Getting image from Docker Registry...OK
-           	     Deploying image in QA env...OK
-              	     Executing QA tests...OK
-		     // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-                     """
-       		  }
+		     script {
+                         if (env.BRANCH_NAME == "master") {
+       		    		 echo """
+        	    		 Getting image from Docker Registry...OK
+           	    		 Deploying image in QA env...OK
+              	    		 Executing QA tests...OK
+		    		 // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+                    		 """
+       		 	 }
+		     }
    	 }
 
     	 if(userInput['Stage']){
       		  stage('stage env') {
-        	    echo """
-		    Getting image from Docker Registry...OK
-		    Deploying image in Stage env...OK
-		    Executing tests...OK
-		    // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-                    """
-        	  }
+	             script {
+                         if (env.BRANCH_NAME == "master") {
+        	   		 echo """
+		  	         Getting image from Docker Registry...OK
+		    		 Deploying image in Stage env...OK
+		   		 Executing tests...OK
+		  		  // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+                    		 """
+        	     }
     	 }
 
          stage('production env') {
-      		  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
-      		  echo 'Deploying to Production...OK'
-		  //sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
-    	}
+		 script {
+                         if (env.BRANCH_NAME == "master") {
+      		 		 input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
+      		 		 echo 'Deploying to Production...OK'
+		 		 //sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
+    		         }
+		 }
 }
 }
 
