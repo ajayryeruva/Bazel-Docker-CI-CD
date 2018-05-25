@@ -61,7 +61,8 @@ node('slave-bazel')  {
                     		 """
        		 	 }
 		     }
-   	 }
+   	          }
+	 }
 
     	 if(userInput['Stage']){
       		  stage('stage env') {
@@ -73,7 +74,9 @@ node('slave-bazel')  {
 		   		 Executing tests...OK
 		  		  // sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
                     		 """
-        	     }
+        	    	 }
+		     }
+		  }
     	 }
 
          stage('production env') {
