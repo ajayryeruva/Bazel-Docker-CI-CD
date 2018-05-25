@@ -15,8 +15,8 @@ node('master')  {
           //}
           stage('bazel-build'){
                  sh 'cd cpp-ci-cd-example/; /usr/bin/bazel build //main:hello-world'
-		 #sh 'cp bazel-bin/main/hello-world docker-static-binary/run/;
-		 #sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh;
+		 //sh 'cp bazel-bin/main/hello-world docker-static-binary/run/;
+		 //sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh;
           }
 }
 }
