@@ -63,7 +63,7 @@ node('slave-bazel')  {
 	  //}
 	  stage('Deployment approval'){
 		script {
-                         if (env.BRANCH_NAME == "master") {
+                         //if (env.BRANCH_NAME == "master") {
                             echo """
 			    Getting image from Docker Registry...OK
 			    Deploying image...OK
@@ -74,7 +74,7 @@ node('slave-bazel')  {
 			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run QA tests', name: 'QA'],
 			    [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Run stage tests', name: 'Stage']
 			    ])
-                         }
+                         //}
                   }
 	  }
 
