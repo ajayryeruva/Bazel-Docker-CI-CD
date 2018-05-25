@@ -20,18 +20,18 @@ node('master')  {
                  sh 'cd cpp-ci-cd-example/; sudo bazel-bin/main/hello-world; sudo cp bazel-bin/main/hello-world docker-static-binary/run/'
           }
           stage ('cppcheck'){
-		 build job: 'cppcheck-report', wait: false
+	  	 build job: 'cppcheck-report', wait: false
           }
-          stage('sonarscan') {
+          //stage('sonarscan') {
 		 // ws('.') {
 		 // requires SonarQube Scanner 2.8+
-		 def ScannerHome = tool 'SonarScanner';
-		 withSonarQubeEnv('SonarQube 7.1') {
+		 //def ScannerHome = tool 'SonarScanner';
+		 //withSonarQubeEnv('SonarQube 7.1') {
 		 // bat "${ScannerHome}/bin/sonar-scanner.bat"
-		 sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.cppcheck.reportPath=cppcheck.xml -Dsonar.analysis.mode= -X"
+		 //sh "${ScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://52.11.124.85:8081 -Dsonar.branch=${env.BRANCH_NAME} -Dsonar.working.directory=/opt/sonar-scanner/.sonar -Dsonar.cppcheck.reportPath=cppcheck.xml -Dsonar.analysis.mode= -X"
 		  }
 		//}
-	  }
+	  //}
 	  stage('Deployment approval'){
 		echo """
 		Getting image from Docker Registry...OK
