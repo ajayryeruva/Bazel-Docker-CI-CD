@@ -21,6 +21,28 @@ node('master')  {
 }
 }
 
+catch (caughtError) {
+    err = caughtError
+    currentBuild.result = "FAILURE"
+}
+
+finally {
+    (currentBuild.result != "ABORTED") && node("master") {
+        // Send e-mail notifications for failed or unstable builds.
+        // currentBuild.result must be non-null for this step to work.
+        step([$class: 'Mailer',
+        notifyEveryUnstableBuild: true,
+        recipients: "ajay.yeruva@mindstream.org",
+        sendToIndividuals: true])
+    }
+    /* Must re-throw exception to propagate error */
+    if (err) {
+        throw err
+    }
+
+}
+
+
 try {
 node('slave-bazel')  {
           stage('bazel-test'){
@@ -104,7 +126,7 @@ catch (caughtError) {
 }
 
 finally {
-    (currentBuild.result != "ABORTED") && node("master") {
+    (currentBuild.result != "ABORTED") && node("slave-bazel") {
         // Send e-mail notifications for failed or unstable builds.
         // currentBuild.result must be non-null for this step to work.
         step([$class: 'Mailer',
