@@ -20,10 +20,11 @@ node('master')  {
           }
 }
 }
+
 try {
 node('slave-bazel')  {
           stage('bazel-test'){
-                 sh 'cd cpp-ci-cd-example/; bazel-bin/main/hello-world; 	 
+                 sh 'cd cpp-ci-cd-example/; bazel-bin/main/hello-world' 	 
           }
           stage ('cppcheck'){
 	  	 build job: 'cppcheck-report', wait: false
