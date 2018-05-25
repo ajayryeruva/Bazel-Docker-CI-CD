@@ -70,6 +70,7 @@ node('master')  {
          stage('production env') {
       		  input message: 'Are you sure you want to deploy to Production?', submitter: 'mindstream'
       		  echo 'Deploying to Production...OK'
+		  sh 'cd cpp-ci-cd-example/docker-static-binary/; ./run.sh'
     	}
 }
 }
